@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>User Card Grid Layout</title>
+	<link rel="stylesheet" href="style.css">
+	
+</head>
+<body>
+	<nav>
+		<h1>HELLO GUYS 😍 </h1>
+		<button id="get-users-btn">Get Users</button>
+	</nav>
+	<div class="container">
+		<div class="user-cards">
+		</div>
+	</div>
+	
+	<script>
+		let getUsersBtn = document.querySelector('#get-users-btn');
+		let userCardsContainer = document.querySelector('.user-cards');
+		
+		getUsersBtn.addEventListener('click', () => {
+			fetch('https://randomuser.me/api/?results=10')
+				.then(response => response.json())
+				.then(data => {
+					userCardsContainer.innerHTML = '';
+					data.results.forEach(user => {
+						const userCard = `
+							<div class="user-card">
+								<img src="${user.picture.large}" alt="User Avatar">
+								<h2>${user.name.first} ${user.name.last}</h2>
+								<p>${user.email}</p>
+							</div>
+						`;
+						userCardsContainer.innerHTML += userCard;
+					});
+				})
+				.catch(error => console.log(error));
+		});
+	</script>
+	
+</body>
+</html>
